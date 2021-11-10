@@ -32,6 +32,7 @@ alpha<-.5
 
 
 ```
+# Making parts
 
 Before we can draw, we need some inspiration! Lets make some random points. `r ji("smile")`
 We can also add random groups (add independent plotting characteristics based on group ID) for points and calculate their centers of mass. Lets make `r part_n` parts and `r group_n` groups. To reproduce all of the plots use `seed=` `r seed`.
@@ -47,6 +48,8 @@ parts<-obj<-make_parts(part_n,group_n,seed = seed) %>%
 str(obj)
 
 ```
+
+# Plotting parts
 
 Lets take a look at what this looks like.
 
@@ -75,6 +78,7 @@ plot_obj_fun(obj,fun='lines',lwd=4)
 plot_obj_fun(obj,fun='polygon',lwd=4,border=NA)
 plot_obj_fun(obj,fun='points',lwd=4,)
 ```
+# Moving parts
 
 Now lets move the points!`r ji('thumbsup')`
 We can do so in the following ways.

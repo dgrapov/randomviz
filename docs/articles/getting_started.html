@@ -84,6 +84,9 @@
 
     
     
+<div id="making-parts" class="section level1">
+<h1 class="hasAnchor">
+<a href="#making-parts" class="anchor"></a>Making parts</h1>
 <p>Before we can draw, we need some inspiration! Lets make some random points. 😄 We can also add random groups (add independent plotting characteristics based on group ID) for points and calculate their centers of mass. Lets make 10 parts and 2 groups. To reproduce all of the plots use <code>seed=</code> 777.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">randomviz</span><span class="op">)</span>
@@ -119,6 +122,10 @@
 <span class="co">#&gt;  $ colors :List of 2</span>
 <span class="co">#&gt;   ..$ 1: chr "#00000080"</span>
 <span class="co">#&gt;   ..$ 2: chr "#EEE8AA80"</span></code></pre></div>
+</div>
+<div id="plotting-parts" class="section level1">
+<h1 class="hasAnchor">
+<a href="#plotting-parts" class="anchor"></a>Plotting parts</h1>
 <p>Lets take a look at what this looks like.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/init_plot.html">init_plot</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span>
@@ -139,7 +146,7 @@
 <span class="fu"><a href="../reference/plot_obj_fun.html">plot_obj_fun</a></span><span class="op">(</span><span class="va">obj</span>,fun<span class="op">=</span><span class="st">'lines'</span>,lwd<span class="op">=</span><span class="fl">4</span><span class="op">)</span>
 <span class="fu"><a href="../reference/plot_obj_fun.html">plot_obj_fun</a></span><span class="op">(</span><span class="va">obj</span>,fun<span class="op">=</span><span class="st">'polygon'</span>,lwd<span class="op">=</span><span class="fl">4</span>,border<span class="op">=</span><span class="cn">NA</span><span class="op">)</span>
 <span class="fu"><a href="../reference/plot_obj_fun.html">plot_obj_fun</a></span><span class="op">(</span><span class="va">obj</span>,fun<span class="op">=</span><span class="st">'points'</span>,lwd<span class="op">=</span><span class="fl">4</span>,<span class="op">)</span></code></pre></div>
-<p><img src="getting_started_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+<p><img src="getting_started_files/figure-html/unnamed-chunk-6-1.png" width="672"> # Moving parts</p>
 <p>Now lets move the points!👍 We can do so in the following ways.</p>
 <ul>
 <li>attract or repulse from group center</li>
@@ -274,11 +281,14 @@
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">include_graphics</span><span class="op">(</span><span class="st">"imgs/plot4.gif"</span><span class="op">)</span>  </code></pre></div>
 <p><img src="imgs/plot4.gif"><!-- --></p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 

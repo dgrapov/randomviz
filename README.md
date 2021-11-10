@@ -1,11 +1,3 @@
----
-title: ''
-output: 
-  html_document: 
-    keep_md: yes
----
-
-
 
 > # randomviz
 
@@ -19,10 +11,10 @@ Earlier excercise in randomviz.
 
 #### [Repulsive points and aimlessly spinning polygons](https://www.flickr.com/photos/dgrapov_2/6215428437/in/photostream/)
 
-[ ![](vignettes/imgs/past_randomviz1.png) ](https://www.flickr.com/photos/dgrapov_2/6215428437/in/photostream/)
+[<img src="vignettes/imgs/past_randomviz1.png">](https://www.flickr.com/photos/dgrapov_2/6215428437/in/photostream/)
 
 #### [`plot` overload](https://www.flickr.com/photos/dgrapov_2/7046918685/)
-[ ![](vignettes/imgs/past_randomviz2.png) ](https://www.flickr.com/photos/dgrapov_2/7046918685/)
+[<img src="vignettes/imgs/past_randomviz2.png">](https://www.flickr.com/photos/dgrapov_2/7046918685/)
 
 
 ## Current state of useless capabilities
