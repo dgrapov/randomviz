@@ -1,0 +1,240 @@
+---
+title: "Getting started with random plotting"
+author: "Dmitry Grapov"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  fig.width = 7,
+  fig.height = 7
+)
+```
+
+```{r, echo=FALSE}
+library(emo)
+library(gifski)
+library(knitr)
+library(ragg) #pkgdown?
+
+part_n<-10
+group_n<-2
+seed<-777
+iter<-3
+increment<-.5
+alpha<-.5
+
+
+```
+
+Before we can draw, we need some inspiration! Lets make some random points. `r ji("smile")`
+We can also add random groups (add independent plotting characteristics based on group ID) for points and calculate their centers of mass. Lets make `r part_n` parts and `r group_n` groups. To reproduce all of the plots use `seed=` `r seed`.
+
+```{r}
+library(randomviz)
+
+parts<-obj<-make_parts(part_n,group_n,seed = seed) %>%
+  get_centers()  %>%
+  obj_dims() %>%
+  get_colors(alpha=alpha,seed=seed)
+
+str(obj)
+
+```
+
+Lets take a look at what this looks like.
+
+```{r}
+init_plot(obj)
+plot_obj_fun(obj,fun='points',lwd=4)
+```
+
+We can also view this as lines or polygons.
+
+```{r}
+init_plot(obj)
+plot_obj_fun(obj,fun='lines',lwd=4)
+```
+
+
+```{r}
+init_plot(obj)
+plot_obj_fun(obj,fun='polygon',lwd=4,border=NA)
+```
+
+We can also combine all three!
+```{r}
+init_plot(obj)
+plot_obj_fun(obj,fun='lines',lwd=4)
+plot_obj_fun(obj,fun='polygon',lwd=4,border=NA)
+plot_obj_fun(obj,fun='points',lwd=4,)
+```
+
+Now lets move the points!`r ji('thumbsup')`
+We can do so in the following ways.
+
+* attract or repulse from group center
+* rotate around group center
+
+Lets attract the points to their group centers. We can do this in `r iter` steps.
+
+```{r}
+obj <- parts %>%
+points_linear_attractor(.,
+                        attract = T,
+                        increment = increment,
+                        iter = iter) %>%
+obj_dims() %>%
+get_colors(alpha=alpha,seed=seed)
+
+
+init_plot(obj)
+plot_obj_fun(obj,fun='polygon',lwd=4,border=NA)
+plot_obj_fun(obj,fun='points',lwd=4)
+plot_obj_fun(obj,fun='lines',lwd=4)
+
+```
+
+We can also repel all points from their group centers.
+
+```{r}
+obj <- parts %>%
+points_linear_attractor(.,
+                        attract = F,
+                        increment = increment,
+                        iter = iter) %>%
+obj_dims() %>%
+get_colors(alpha=alpha,seed=seed)
+
+
+init_plot(obj)
+plot_obj_fun(obj,fun='polygon',lwd=4,border=NA)
+plot_obj_fun(obj,fun='points',lwd=4)
+plot_obj_fun(obj,fun='lines',lwd=4)
+```
+
+Next lets rotate all parts around their centers and animate the results. `r ji('chicken')`
+
+```{r}
+angles<-seq(0,360, by=90)
+obj<- parts %>%
+  rotate_obj_angles(.,angles) %>%
+  obj_dims() %>%
+  get_colors(alpha=alpha,seed=seed)
+
+
+plot_fun<-function(index){
+      init_plot(obj)
+      for(i in 1:index){
+        plot_obj_fun(obj,index=i,fun='polygon',cex=1,border=NA)
+        plot_obj_fun(obj,index=i,fun='points',cex=1)
+        plot_obj_fun(obj,index=i,fun='lines', lwd=1)
+      }
+    }
+
+f<-function(parts){
+
+      for(i in 1:length(obj$parts)){
+
+        plot_fun(i)
+      }
+
+}
+```
+
+```{r,cache=TRUE,eval=FALSE}
+
+invisible(save_gif(f(), "imgs/plot1.gif", delay = 0.3, progress = FALSE))  
+  
+```
+
+```{r}
+include_graphics("imgs/plot1.gif")  
+```
+
+Now that we have the basic bulding blocks, lets get random! `r ji('mermaid')`
+
+First lets experiment with line plots.
+
+```{r}
+part_n<-250
+group_n<-25
+seed<-777
+iter<-5
+increment<-.5
+alpha<-.8
+zoom<-.7
+
+obj<-make_parts(part_n,group_n,seed = seed) %>%
+  get_centers()  %>%
+  obj_dims(zoom=zoom) %>%
+  get_colors(alpha=alpha,seed=seed)
+
+plot_fun<-function(index){
+  init_plot(obj)
+  for(i in 1:index){
+    plot_obj_fun(obj,index=i,fun='lines',cex=1,lwd=4)
+  }
+}
+  
+```
+
+```{r,eval=FALSE}
+invisible(save_gif(f(obj), gif_file= "imgs/plot2.gif", delay = 0.3, bg='black'))
+```
+
+```{r}
+include_graphics("imgs/plot2.gif")  
+```
+
+The plot above shows randomly generated lines for `r part_n` points split among `r group_n` groups.
+
+Next lets add some polygons.
+
+```{r,cache=TRUE,eval=FALSE}
+
+plot_fun<-function(index){
+  init_plot(obj)
+  for(i in 1:index){
+    plot_obj_fun(obj,index=i,fun='polygon')
+    plot_obj_fun(obj,index=i,fun='lines',cex=1,lwd=4)
+  }
+}
+    
+invisible(save_gif(f(obj), gif_file= "imgs/plot3.gif", delay = 0.3, bg='black'))
+
+```
+
+```{r}
+include_graphics("imgs/plot3.gif")  
+```
+
+Now lets add some rotations and zoom out a bit.
+
+```{r,eval=FALSE}
+obj<-obj %>% rotate_obj_angles(.,angles) %>%
+      obj_dims(zoom=-.25) %>%
+      get_colors(alpha=alpha,seed=seed)
+
+plot_fun<-function(index){
+  init_plot(obj)
+  for(i in 1:index){
+    plot_obj_fun(obj,index=i,fun='polygon')
+    plot_obj_fun(obj,index=i,fun='lines',cex=1,lwd=4)
+  }
+}
+
+
+invisible(save_gif(f(obj), gif_file= "imgs/plot4.gif", delay = 0.2, bg='black'))
+    
+```
+
+```{r}
+include_graphics("imgs/plot4.gif")  
+```
